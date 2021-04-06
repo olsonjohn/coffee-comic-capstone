@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils import timezone
 
 # Create your models here.
 
@@ -26,3 +27,17 @@ class ComicBook(models.Model):
 
     def __str__(self):
         return f'{self.name} | {self.author} | Vol.: {self.volume} - No.: {self.issue}'
+
+
+class ComicComment(models.Model):
+    comic_book_title = models.ForeignKey(ComicBook, on_delete=models.CASCADE)
+    comment = models.TextField()
+    user = models.ForeignKey(ComicUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.comment
+
+
+
+    
