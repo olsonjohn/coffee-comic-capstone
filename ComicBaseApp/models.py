@@ -23,3 +23,6 @@ class ComicBook(models.Model):
     volume = models.IntegerField()
     issue = models.IntegerField()
     is_checked_out = models.BooleanField(default = False)
+
+    def __str__(self):
+        return f'{self.name} | {self.author} | Vol.: {self.volume} - No.: {self.issue}'
