@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ComicBaseApp.models import ComicUser
+from ComicBaseApp.models import ComicUser, ComicBook
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
@@ -7,4 +7,6 @@ from django.contrib.auth.admin import UserAdmin
 
 @admin.register(ComicUser)
 class ComicUserAdmin(admin.ModelAdmin):
-    fields = 'username', 'password', 'display_name', 'bio'
+    fields = 'username', 'password', 'display_name', 'bio', 'favorites'
+
+admin.site.register(ComicBook)
