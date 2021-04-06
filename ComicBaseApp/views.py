@@ -1,12 +1,34 @@
 from django.shortcuts import HttpResponseRedirect, reverse, render
 from django.contrib.auth import login, authenticate, logout
-
+from django.views.generic import View, FormView
 from ComicBaseApp.models import ComicComment, ComicUser, ComicBook 
 from ComicBaseApp.forms import CommentForm, SignUpForm, LoginForm
 
 
-def add_comment(request):
-    if request.method == 'POST':
+# def add_comment(request):
+#     if request.method == 'POST':
+#         form = CommentForm(request.POST)
+#         if form.is_valid():
+#             post_user = ComicUser.objects.filter(username=request.user.username).first()
+#             # fix to be preslected on click
+#             post_comic = ComicBook.objects.all().first()
+#             data = form.cleaned_data
+#             new_comment = ComicComment.objects.create(
+#                 comment = data['comment'],
+#                 user = post_user,
+#                 comic_book_title = post_comic
+#             )
+#             return HttpResponseRedirect(reverse('/'))
+    
+#     form = CommentForm()
+#     return render(request, 'form.html', {'form': form})
+
+class AddCommentView(FormView):
+    def get(self, request):
+        template_name = 'form.html'
+        form = CommentForm()
+        return render(request, template_name, {'form': form})
+    def post(self, request):
         form = CommentForm(request.POST)
         if form.is_valid():
             post_user = ComicUser.objects.filter(username=request.user.username).first()
@@ -18,10 +40,7 @@ def add_comment(request):
                 user = post_user,
                 comic_book_title = post_comic
             )
-            return HttpResponseRedirect(reverse('/'))
-    
-    form = CommentForm()
-    return render(request, 'form.html', {'form': form})
+            return HttpResponseRedirect(reverse('home'))
 
 
 def signup_view(request):
