@@ -1,7 +1,9 @@
 from django.shortcuts import HttpResponseRedirect, reverse, render
+from django.contrib.auth import login
 
-from ComicBaseApp.models import ComicComment, ComicUser, ComicBook
-from ComicBaseApp.forms import CommentForm
+from ComicBaseApp.models import ComicComment, ComicUser, ComicBook 
+from ComicBaseApp.forms import CommentForm, SignUpForm
+
 
 def add_comment(request):
     if request.method == 'POST':
@@ -20,4 +22,20 @@ def add_comment(request):
     
     form = CommentForm()
     return render(request, 'form.html', {'form': form})
+
+
+def signup_view(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            new_user = ComicUser.objects.create_user(username=data['username'], password=data['password'])
+            login(request, new_user)
+            return HttpResponseRedirect(reverse("home"))
+
+    form = SignUpForm()
+    return render(request, "form.html", {'form': form})
+
+
+
     

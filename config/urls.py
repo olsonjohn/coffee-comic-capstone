@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from ComicBaseApp.views import add_comment
+from ComicBaseApp.views import add_comment, signup_view
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('add_comment/', add_comment, name='add_comment'),
+    path('signup/', signup_view, name='signup'),
+
 ]
