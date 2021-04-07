@@ -56,8 +56,30 @@ def signup_view(request):
     return render(request, "form.html", {'form': form})
 
 
-def login_view(request):
-    if request.method == 'POST':
+# def login_view(request):
+#     if request.method == 'POST':
+#         form = LoginForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             user = authenticate(
+#                 request,
+#                 username = data.get('username'),
+#                 password = data.get('password')
+#             )
+#         if user:
+#             login(request, user)
+#             return HttpResponseRedirect(reverse('home'))
+#     form = LoginForm()
+#     return render(request, 'form.html', {'form': form})
+
+
+class LoginView(View):
+    def get(self, request):
+        template_name = 'form.html'
+        form = LoginForm
+        return render(request, template_name, {'form': form})
+
+    def post(self, request):
         form = LoginForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -69,9 +91,7 @@ def login_view(request):
         if user:
             login(request, user)
             return HttpResponseRedirect(reverse('home'))
-    form = LoginForm()
-    return render(request, 'form.html', {'form': form})
-
+            
 
 def logout_view(request):
     logout(request)
