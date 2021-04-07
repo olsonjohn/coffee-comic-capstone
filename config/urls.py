@@ -16,13 +16,13 @@ Function views
 from django.contrib import admin
 from django.urls import path
 
-from ComicBaseApp.views import index, AddCommentView, signup_view, login_view, logout_view
+from ComicBaseApp.views import index, AddCommentView, signup_view, LoginView, logout_view
 
 urlpatterns = [
     path("", index, name="home"),
     path("admin/", admin.site.urls),
     path("add_comment/", AddCommentView.as_view(), name="add_comment"),
     path("signup/", signup_view, name="signup"),
-    path("login/", login_view, name="login"),
+    path("login/", LoginView.as_view(), name="login"),
     path("logout/", logout_view, name="logout"),
 ]
