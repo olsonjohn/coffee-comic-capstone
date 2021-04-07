@@ -42,9 +42,12 @@ class AddCommentView(FormView):
             )
             return HttpResponseRedirect(reverse('home'))
 
-
-def signup_view(request):
-    if request.method == "POST":
+class SignupView(View):
+    def get(self, request):
+        template_name = 'form.html'
+        form = SignUpForm()
+        return render(request, template_name, {'form': form})
+    def post(self, request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
@@ -52,8 +55,20 @@ def signup_view(request):
             login(request, new_user)
             return HttpResponseRedirect(reverse("home"))
 
-    form = SignUpForm()
-    return render(request, "form.html", {'form': form})
+
+
+
+# def signup_view(request):
+#     if request.method == "POST":
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             data = form.cleaned_data
+#             new_user = ComicUser.objects.create_user(username=data['username'], password=data['password'])
+#             login(request, new_user)
+#             return HttpResponseRedirect(reverse("home"))
+
+#     form = SignUpForm()
+#     return render(request, "form.html", {'form': form})
 
 
 def login_view(request):
