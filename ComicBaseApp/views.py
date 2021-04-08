@@ -3,6 +3,11 @@ from django.contrib.auth import login, authenticate, logout
 from django.views.generic import View, FormView
 from ComicBaseApp.models import ComicComment, ComicUser, ComicBook
 from ComicBaseApp.forms import CommentForm, SignUpForm, LoginForm
+import requests
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 class AddCommentView(FormView):
@@ -70,5 +75,16 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('home'))
 
 
+
 def index(request):
-    return render(request, 'index.html')
+    html = 'index.html'
+    BASE_URL = 'https://comicvine.gamespot.com/api/'
+    END_POINT = 'character/4005-75254/'
+    QUERY = '' 
+    url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+    response = requests.get(url, headers=headers)
+    info = response.json()
+    issue_results = info['results']
+    context = {'issue': issue_results}
+    return render(request, html, context)
