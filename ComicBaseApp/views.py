@@ -75,20 +75,16 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('home'))
 
 
+
 def index(request):
     html = 'index.html'
-    url = "http://comicvine.gamespot.com/api/search/?api_key=&format=json&query=link"
+    BASE_URL = 'https://comicvine.gamespot.com/api/'
+    END_POINT = 'character/4005-75254/'
+    QUERY = '' 
+    url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     response = requests.get(url, headers=headers)
     info = response.json()
     issue_results = info['results']
     context = {'issue': issue_results}
     return render(request, html, context)
-
-# def home(request):
-#     response = requests.get('http://freegeoip.net/json/')
-#     geodata = response.json()
-#     return render(request, 'core/home.html', {
-#         'ip': geodata['ip'],
-#         'country': geodata['country_name']
-#     })
