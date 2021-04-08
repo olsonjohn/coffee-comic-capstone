@@ -16,7 +16,7 @@ Function views
 from django.contrib import admin
 from django.urls import path
 
-from ComicBaseApp.views import index, AddCommentView, SignupView, LoginView, logout_view
+from ComicBaseApp.views import index, AddCommentView, SignupView, LoginView, logout_view, e404, e500
 
 urlpatterns = [
     path("", index, name="home"),
@@ -25,4 +25,9 @@ urlpatterns = [
     path("signup/", SignupView.as_view(), name="signup"),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", logout_view, name="logout"),
+    # path('404/', e404),
+    # path('500/', e500)
 ]
+
+handler404 = 'ComicBaseApp.views.e404'
+handler500 = 'ComicBaseApp.views.e500'

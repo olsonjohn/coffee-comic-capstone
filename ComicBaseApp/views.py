@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.views.generic import View, FormView
 from ComicBaseApp.models import ComicComment, ComicUser, ComicBook
 from ComicBaseApp.forms import CommentForm, SignUpForm, LoginForm
+
+
 import requests
 import environ
 
@@ -88,3 +90,15 @@ def index(request):
     issue_results = info['results']
     context = {'issue': issue_results}
     return render(request, html, context)
+
+def e404(request, exception):
+    html = '404.html'
+    response = (render(request, html))
+    response.status_code = 404
+    return response
+
+def e500(request):
+    html = '500.html'
+    response = (render(request, html))
+    response.status_code = 500
+    return response
