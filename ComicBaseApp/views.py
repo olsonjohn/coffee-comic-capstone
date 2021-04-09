@@ -82,7 +82,7 @@ def index(request):
     html = 'index.html'
     BASE_URL = 'https://comicvine.gamespot.com/api/'
     END_POINT = 'issues/'
-    QUERY = 'field_list=image,name'
+    QUERY = 'field_list=image,name,id,api_detail_url'
     url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     response = requests.get(url, headers=headers)
@@ -102,3 +102,26 @@ def e500(request):
     response = (render(request, html))
     response.status_code = 500
     return response
+
+
+class ComicDetailView(View):
+    
+    def api_call(self, id):
+        BASE_URL = 'https://comicvine.gamespot.com/api/'
+        END_POINT = f'issue/4000-{id}'
+        QUERY = 'field_list=image,name,id,issue_number,volume,description'
+        url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
+        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+        response = requests.get(url, headers=headers)
+        info = response.json()
+        issue_results = info['results']
+        return issue_results
+
+    def get(self, request, id):
+        html = 'comic_detail.html'
+        # somehow need to pass in issue number to api
+        issue_results = self.api_call(id)
+        context = {'issue': issue_results}
+        # breakpoint()
+        return render(request, html, context)
+        

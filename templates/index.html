@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 {% block content%}
 
-<h1>Hi.</h1>
 <ul>
     {% for issue in issue %}
     {% if issue.name is not None %}
     <li>
-        <!-- <a href="comicinfo/"> -->
+        <a href="comicinfo/{{issue.id}}">
             <img src="{{ issue.image.thumb_url }}" alt="">
-        <!-- </a> -->
-        {{ issue.name }}
+        </a>
+        {{issue.id}} | {{ issue.name }}
     </li>
     {% endif %}
     {% endfor %}
