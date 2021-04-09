@@ -81,8 +81,8 @@ def logout_view(request):
 def index(request):
     html = 'index.html'
     BASE_URL = 'https://comicvine.gamespot.com/api/'
-    END_POINT = 'character/4005-75254/'
-    QUERY = '' 
+    END_POINT = 'issues/'
+    QUERY = 'field_list=image,name'
     url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     response = requests.get(url, headers=headers)

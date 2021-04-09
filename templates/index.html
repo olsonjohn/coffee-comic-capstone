@@ -4,9 +4,14 @@
 <h1>Hi.</h1>
 <ul>
     {% for issue in issue %}
+    {% if issue.name is not None %}
     <li>
-        Issue: {{ issue }}
+        <!-- <a href="comicinfo/"> -->
+            <img src="{{ issue.image.thumb_url }}" alt="">
+        <!-- </a> -->
+        {{ issue.name }}
     </li>
+    {% endif %}
     {% endfor %}
 </ul>
 {% endblock %}
