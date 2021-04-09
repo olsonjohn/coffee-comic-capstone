@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content%}
+<h1> {{issue.name}} - Issue: {{issue.issue_number}} </h2>
+        <img src="{{ issue.image.thumb_url }}" alt="">
+
+
+  {% if issue.description is not None %}
+  {% autoescape off %}
+{{issue.description}}
+{% endautoescape %}
+    {% else %}
+    <p> No Description Available </p>
+    {% endif %}
+
+{% endblock %}
