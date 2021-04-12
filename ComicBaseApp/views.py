@@ -91,6 +91,21 @@ def index(request):
     context = {'issue': issue_results}
     return render(request, html, context)
 
+# def add_favorite(request, id):
+#     current_user = ComicUser.objects.get(name=request.user.display_name)
+#     comic = ComicBook.objects.get(id=id)
+#     current_user.favorites.add(comic)
+#     current_user.save()
+
+#     return HttpResponseRedirect(reverse('home'))
+
+def profile_view(request, username):
+    user = ComicUser.objects.filter(username=username).first()
+    # favorites = user.favorites.all()
+    return render(request, 'profile.html', {'user': user})
+
+
+
 def e404(request, exception):
     html = '404.html'
     response = (render(request, html))
