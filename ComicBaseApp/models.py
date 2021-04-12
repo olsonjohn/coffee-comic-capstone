@@ -2,18 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 
-# Create your models here.
-
-
-class ComicUser(AbstractUser):
-    display_name = models.CharField(max_length=50, null=True, blank=True)
-    bio = models.TextField()
-    favorites = models.ManyToManyField('ComicBook', blank=True, related_name='favorites')
-    REQUIRED_FIELDS = ['display_name', 'bio']
-
-    def __str__(self):
-        return self.username
-
 
 class ComicBook(models.Model):
     name = models.CharField(max_length = 150, null=True, blank=True)
@@ -28,6 +16,17 @@ class ComicBook(models.Model):
 
     def __str__(self):
         return f'{self.name} | {self.author} | Vol.: {self.volume} - No.: {self.issue}'
+
+
+class ComicUser(AbstractUser):
+    display_name = models.CharField(max_length=50, null=True, blank=True)
+    bio = models.TextField()
+    favorites = models.ManyToManyField('ComicBook', blank=True, related_name='favorites')
+    #favorites = models.ForeignKey('ComicBook', on_delete=models.CASCADE, null=True, blank=True, related_name='favorites')
+    REQUIRED_FIELDS = ['display_name', 'bio']
+
+    def __str__(self):
+        return self.username
 
 
 class ComicComment(models.Model):

@@ -133,6 +133,22 @@ class ComicDetailView(View):
         issue_results = info['results']
         return issue_results
 
+
+    def add_database(self, id):
+        comic = self.api_call(id)
+        ComicBook.objects.create(
+           name = comic["name"],
+           author = comic["person_credits"][0]["name"],
+           description = comic["description"],
+        #    published_date = comic.published_date,
+        #    publisher =
+           volume = comic["volume"]["name"],
+           issue = comic["issue_number"],
+           image = comic["image"]["thumb_url"],
+           #is_checked_out           
+        )        
+    
+
     def get(self, request, id):
         html = 'comic_detail.html'        
         issue_results = self.api_call(id)
@@ -140,20 +156,20 @@ class ComicDetailView(View):
         return render(request, html, context)
 
     def post(self, request, id):
-        html = 'comic_detail.html'        
+        html = 'comic_detail.html'    
         issue_results = self.api_call(id)
-        context = {'issue': issue_results}        
-        ComicBook.objects.create(
-           name = issue_results["name"],
-           author = issue_results["person_credits"][0]["name"],
-           description = issue_results["description"],
-        #    published_date = issue_results.published_date,
-        #    publisher =
-           volume = issue_results["volume"]["name"],
-           issue = issue_results["issue_number"],
-           image = issue_results["image"]["thumb_url"],
-           #is_checked_out           
+        
+        if not ComicBook.objects.filter(name=issue_results["name"]).first():
+            self.add_database(id)
+        breakpoint()
+        fav_comic = ComicBook.objects.filter(name=issue_results["name"])
+        cuser = ComicUser.objects.get(id=request.user.id).first()
+        
+        # add comic to user's favorites 
+        # Currently adding to all users favorites
+        cuser.favorites.add(fav_comic)
+        cuser.save()
 
-        )        
+        context = {'issue': issue_results}     
         return render(request, html, context)
         
