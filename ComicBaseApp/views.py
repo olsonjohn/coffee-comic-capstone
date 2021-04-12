@@ -124,7 +124,8 @@ class ComicDetailView(View):
     def api_call(self, id):
         BASE_URL = 'https://comicvine.gamespot.com/api/'
         END_POINT = f'issue/4000-{id}'
-        QUERY = 'field_list=image,name,id,issue_number,volume,description'
+        # QUERY = 'field_list=image,name,id,[issue_number],volume,description, person_credits'
+        QUERY = ""
         url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
         headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         response = requests.get(url, headers=headers)
@@ -133,10 +134,26 @@ class ComicDetailView(View):
         return issue_results
 
     def get(self, request, id):
-        html = 'comic_detail.html'
-        # somehow need to pass in issue number to api
+        html = 'comic_detail.html'        
         issue_results = self.api_call(id)
-        context = {'issue': issue_results}
-        # breakpoint()
+        context = {'issue': issue_results}        
+        return render(request, html, context)
+
+    def post(self, request, id):
+        html = 'comic_detail.html'        
+        issue_results = self.api_call(id)
+        context = {'issue': issue_results}        
+        ComicBook.objects.create(
+           name = issue_results["name"],
+           author = issue_results["person_credits"][0]["name"],
+           description = issue_results["description"],
+        #    published_date = issue_results.published_date,
+        #    publisher =
+           volume = issue_results["volume"]["name"],
+           issue = issue_results["issue_number"],
+           image = issue_results["image"]["thumb_url"],
+           #is_checked_out           
+
+        )        
         return render(request, html, context)
         

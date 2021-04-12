@@ -16,13 +16,14 @@ class ComicUser(AbstractUser):
 
 
 class ComicBook(models.Model):
-    name = models.CharField(max_length = 150)
+    name = models.CharField(max_length = 150, null=True, blank=True)
     author = models.CharField(max_length = 50)
-    description = models.TextField()
-    published_date = models.DateField()
-    publisher = models.CharField(max_length = 50)
-    volume = models.IntegerField()
+    description = models.TextField(null=True, blank=True)
+    published_date = models.DateField(null=True, blank=True)
+    publisher = models.CharField(max_length = 50, null=True, blank=True)
+    volume = models.CharField(max_length=150)
     issue = models.IntegerField()
+    image = models.URLField(default="")
     is_checked_out = models.BooleanField(default = False)
 
     def __str__(self):
