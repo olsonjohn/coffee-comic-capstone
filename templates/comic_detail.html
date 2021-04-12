@@ -12,6 +12,17 @@
     <p> No Description Available </p>
     {% endif %}
 
+    {% comment %}
+    <a href = "{% url 'comicinfo' id=issue.id %}"> <button>add</button></a>
+    {% endcomment %}
+
+    <form action="" method="POST">
+      {% csrf_token %}
+    <button type="submit">Add to my favorites</button>
+  </form>
+
+    
+
 
 
 

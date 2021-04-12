@@ -124,7 +124,8 @@ class ComicDetailView(View):
     def api_call(self, id):
         BASE_URL = 'https://comicvine.gamespot.com/api/'
         END_POINT = f'issue/4000-{id}'
-        QUERY = 'field_list=image,name,id,issue_number,volume,description'
+        # QUERY = 'field_list=image,name,id,[issue_number],volume,description, person_credits'
+        QUERY = ""
         url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
         headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
         response = requests.get(url, headers=headers)
@@ -132,11 +133,43 @@ class ComicDetailView(View):
         issue_results = info['results']
         return issue_results
 
+
+    def add_database(self, id):
+        comic = self.api_call(id)
+        ComicBook.objects.create(
+           name = comic["name"],
+           author = comic["person_credits"][0]["name"],
+           description = comic["description"],
+        #    published_date = comic.published_date,
+        #    publisher =
+           volume = comic["volume"]["name"],
+           issue = comic["issue_number"],
+           image = comic["image"]["thumb_url"],
+           #is_checked_out           
+        )        
+    
+
     def get(self, request, id):
-        html = 'comic_detail.html'
-        # somehow need to pass in issue number to api
+        html = 'comic_detail.html'        
         issue_results = self.api_call(id)
-        context = {'issue': issue_results}
-        # breakpoint()
+        context = {'issue': issue_results}        
+        return render(request, html, context)
+
+    def post(self, request, id):
+        html = 'comic_detail.html'    
+        issue_results = self.api_call(id)
+        
+        if not ComicBook.objects.filter(name=issue_results["name"]).first():
+            self.add_database(id)
+        breakpoint()
+        fav_comic = ComicBook.objects.filter(name=issue_results["name"])
+        cuser = ComicUser.objects.get(id=request.user.id).first()
+        
+        # add comic to user's favorites 
+        # Currently adding to all users favorites
+        cuser.favorites.add(fav_comic)
+        cuser.save()
+
+        context = {'issue': issue_results}     
         return render(request, html, context)
         
