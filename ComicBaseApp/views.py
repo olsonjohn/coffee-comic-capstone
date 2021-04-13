@@ -1,4 +1,4 @@
-from django.shortcuts import HttpResponseRedirect, reverse, render
+from django.shortcuts import HttpResponseRedirect, reverse, render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.views.generic import View, FormView
 from ComicBaseApp.models import ComicComment, ComicUser, ComicBook
@@ -78,7 +78,6 @@ def logout_view(request):
     return HttpResponseRedirect(reverse('home'))
 
 
-
 def index(request):
     html = 'index.html'
     BASE_URL = 'https://comicvine.gamespot.com/api/'
@@ -92,19 +91,11 @@ def index(request):
     context = {'issue': issue_results}
     return render(request, html, context)
 
-# def add_favorite(request, id):
-#     current_user = ComicUser.objects.get(name=request.user.display_name)
-#     comic = ComicBook.objects.get(id=id)
-#     current_user.favorites.add(comic)
-#     current_user.save()
-
-#     return HttpResponseRedirect(reverse('home'))
 
 def profile_view(request, username):
-    user = ComicUser.objects.filter(username=username).first()
+    user = ComicUser.objects.get(username=username)
     # favorites = user.favorites.all()
     return render(request, 'profile.html', {'user': user})
-
 
 
 def e404(request, exception):
@@ -113,6 +104,7 @@ def e404(request, exception):
     response.status_code = 404
     return response
 
+
 def e500(request):
     html = '500.html'
     response = (render(request, html))
@@ -120,8 +112,8 @@ def e500(request):
     return response
 
 
-class ComicDetailView(View):
-    
+class AddFavoriteView(View):
+
     def api_call(self, id):
         BASE_URL = 'https://comicvine.gamespot.com/api/'
         END_POINT = f'issue/4000-{id}'
@@ -134,42 +126,83 @@ class ComicDetailView(View):
         issue_results = info['results']
         return issue_results
 
+    def add_database(self, id):
+        comic = self.api_call(id)
+        ComicBook.objects.create(
+           name=comic["name"],
+           author=comic["person_credits"][0]["name"],
+           description=comic["description"],
+           #  published_date = comic.published_date,
+           #  publisher =
+           volume=comic["volume"]["name"],
+           issue=comic["issue_number"],
+           image=comic["image"]["thumb_url"],
+           # is_checked_out
+        )
+
+    def get(self, request, id):
+        html = 'profile.html'
+        issue_results = self.api_call(id)
+
+        if not ComicBook.objects.filter(name=issue_results["name"]).first():
+            self.add_database(id)
+        fav_comic = ComicBook.objects.get(name=issue_results["name"])
+        cuser = ComicUser.objects.get(id=request.user.id)
+
+        # add comic to user's favorites
+        # Currently adding to all users favorites
+        cuser.favorites.add(fav_comic)
+        cuser.save()
+        return redirect(profile_view, username=request.user.username)
+
+
+class ComicDetailView(View):
+
+    def api_call(self, id):
+        BASE_URL = 'https://comicvine.gamespot.com/api/'
+        END_POINT = f'issue/4000-{id}'
+        # QUERY = 'field_list=image,name,id,[issue_number],volume,description, person_credits'
+        QUERY = ""
+        url = f"{BASE_URL}{END_POINT}?format=json&api_key={env('API_KEY')}&{QUERY}"
+        headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+        response = requests.get(url, headers=headers)
+        info = response.json()
+        issue_results = info['results']
+        return issue_results
 
     def add_database(self, id):
         comic = self.api_call(id)
         ComicBook.objects.create(
-           name = comic["name"],
-           author = comic["person_credits"][0]["name"],
-           description = comic["description"],
-        #    published_date = comic.published_date,
-        #    publisher =
-           volume = comic["volume"]["name"],
-           issue = comic["issue_number"],
-           image = comic["image"]["thumb_url"],
-           #is_checked_out           
-        )        
-    
+           name=comic["name"],
+           author=comic["person_credits"][0]["name"],
+           description=comic["description"],
+           #  published_date = comic.published_date,
+           #  publisher =
+           volume=comic["volume"]["name"],
+           issue=comic["issue_number"],
+           image=comic["image"]["thumb_url"],
+           # is_checked_out
+        )
 
     def get(self, request, id):
-        html = 'comic_detail.html'        
+        html = 'comic_detail.html'
         issue_results = self.api_call(id)
-        context = {'issue': issue_results}        
+        context = {'issue': issue_results}
         return render(request, html, context)
 
     def post(self, request, id):
-        html = 'comic_detail.html'    
+        html = 'comic_detail.html'
         issue_results = self.api_call(id)
-        
+
         if not ComicBook.objects.filter(name=issue_results["name"]).first():
             self.add_database(id)
-        fav_comic = ComicBook.objects.filter(name=issue_results["name"])
-        cuser = ComicUser.objects.get(id=request.user.id).first()
-        
-        # add comic to user's favorites 
+        fav_comic = ComicBook.objects.get(name=issue_results["name"])
+        cuser = ComicUser.objects.get(id=request.user.id)
+
+        # add comic to user's favorites
         # Currently adding to all users favorites
         cuser.favorites.add(fav_comic)
         cuser.save()
 
-        context = {'issue': issue_results}     
+        context = {'issue': issue_results}
         return render(request, html, context)
-        
