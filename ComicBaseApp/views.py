@@ -46,7 +46,8 @@ class SignupView(View):
             data = form.cleaned_data
             new_user = ComicUser.objects.create_user(
                 username=data['username'],
-                password=data['password']
+                password=data['password'],
+                display_name=data['display_name']
             )
             login(request, new_user)
             return HttpResponseRedirect(reverse("home"))
@@ -161,7 +162,6 @@ class ComicDetailView(View):
         
         if not ComicBook.objects.filter(name=issue_results["name"]).first():
             self.add_database(id)
-        breakpoint()
         fav_comic = ComicBook.objects.filter(name=issue_results["name"])
         cuser = ComicUser.objects.get(id=request.user.id).first()
         

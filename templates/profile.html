@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-
-{{user.display_name}}
-{{user.favorites}}
-
-<!-- <ul>
-    {% for favorite in favorites %}
-    <li>
-        {{favorite}}
-    </li>
+<div>
+ Welcome {{user.display_name}}
+</div>
+<div>
+<h2> Your Favorites </h2>
+    {% for favorite in user.favorites.values %}
+   <div>
+   <img src='{{favorite.image}}' alt='comic image'/>
+        <a href="/comic/{{favorite.id}}">{{favorite.name}}</a>
+        <p>Author: {{favorite.author}}
+        <div><h6>Description</h6>
+         {% autoescape off %}
+        <p>{{favorite.description}}</p>
+        {% endautoescape %}
+        </div>
+    </div>
     {% endfor %}
-    
-</ul> -->
-
+<div>
 {% endblock %}
