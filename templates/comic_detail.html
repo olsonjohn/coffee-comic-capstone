@@ -14,12 +14,15 @@
 
     {% comment %}
     <a href = "{% url 'comicinfo' id=issue.id %}"> <button>add</button></a>
+    <button type="submit">Add to my favorites</button>
+    <form action="{% url 'profile_view' username=request.user.username %}" method="POST">
+    </form>
     {% endcomment %}
 
-    <form action="" method="POST">
       {% csrf_token %}
-    <button type="submit">Add to my favorites</button>
-  </form>
+    <a href="{% url 'favorite_view' id=issue.id %}">
+      <button>Add to Favorites</button>
+    </a>
 
     
 
