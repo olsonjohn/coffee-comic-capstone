@@ -23,7 +23,8 @@ class ComicUser(AbstractUser):
     bio = models.TextField()
     favorites = models.ManyToManyField('ComicBook', blank=True, related_name='favorites')
     # favorites = models.ForeignKey('ComicBook', on_delete=models.CASCADE, null=True, blank=True, related_name='favorites')
-    REQUIRED_FIELDS = ['display_name', 'bio']
+    created_date = models.DateField(default=timezone.now)
+    REQUIRED_FIELDS = ['display_name', 'bio','created_date']
 
     def __str__(self):
         return self.username
