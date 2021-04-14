@@ -23,6 +23,18 @@
     <a href="{% url 'favorite_view' id=issue.id %}">
       <button>Add to Favorites</button>
     </a>
+    <hr>
+    <ul>
+      {% for comment in comments%}
+      <li>{{ comment.comment }} | {{ comment.user }} <br> {{ comment.created_at }}</li><hr>
+      {% endfor %}
+    </ul>
+
+    <a href="{% url 'add_comment' id=book.id %}">
+      <button>Comment</button>
+    </a>
+
+    
 
     
 
