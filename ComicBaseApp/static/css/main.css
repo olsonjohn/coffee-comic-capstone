@@ -1,0 +1,17 @@
+
+@font-face {
+    font-family: SuperLegendBoy;
+    src: url(../fonts/SuperLegendBoy.ttf);
+}
+
+@font-face {
+    font-family: WayfarersToyBoxRegular;
+    src: url(../fonts/WayfarersToyBoxRegular.ttf);
+}
+:root {
+    font-family: SuperLegendBoy;
+}
+
+.heading{
+    font-family: WayfarersToyBoxRegular;
+}
