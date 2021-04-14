@@ -12,7 +12,7 @@ Date Joined: {{user.created_date}}
     {% for favorite in user.favorites.values %}
    <div>
    <img src='{{favorite.image}}' alt='comic image'/>
-        <a href="/comicinfo/{{issue.id}}">
+        <a href="/comicinfo/{{favorite.id}}/">
             {{favorite.name}}
         </a>
         <p>Author: {{favorite.author}}

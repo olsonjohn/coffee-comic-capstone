@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content%}
-<h1> {{issue.name}} - Issue: {{issue.issue_number}} </h2>
-        <img src="{{ issue.image.thumb_url }}" alt="">
+<h1> {{book.name}} - Issue: {{book.issue_number}} </h2>
+        <img src="{{ book.image }}" alt="">
 
 
-  {% if issue.description is not None %}
+  {% if book.description is not None %}
   {% autoescape off %}
-{{issue.description}}
+{{book.description}}
 {% endautoescape %}
     {% else %}
     <p> No Description Available </p>
@@ -20,7 +20,7 @@
     {% endcomment %}
 
       {% csrf_token %}
-    <a href="{% url 'favorite_view' id=issue.id %}">
+    <a href="{% url 'favorite_view' id=book.id %}">
       <button>Add to Favorites</button>
     </a>
     <hr>
@@ -33,6 +33,18 @@
     <a href="{% url 'add_comment' id=book.id %}">
       <button>Comment</button>
     </a>
+
+      {% if not book.is_checked_out %}
+        <a href="{% url 'checkout_view' id=book.id %}">
+        <button>Checkout</button>
+        </a>
+      {% else %}
+        <p>This book is checked out. Place hold?</p>
+        <a href="{% url 'hold_view' id=book.id %}">
+        <button>Place on hold</button>
+      </a>
+      {% endif %}
+    
 
     
 
