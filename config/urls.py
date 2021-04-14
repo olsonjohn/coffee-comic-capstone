@@ -21,7 +21,7 @@ from ComicBaseApp.views import index, AddCommentView, SignupView, LoginView, log
 urlpatterns = [
     path("", index, name="home"),
     path("admin/", admin.site.urls),
-    path("add_comment/", AddCommentView.as_view(), name="add_comment"),
+    path("add_comment/<int:id>/", AddCommentView.as_view(), name="add_comment"),
     path("signup/", SignupView.as_view(), name="signup"),
     path("login/", LoginView.as_view(), name="login"),
     path("logout/", logout_view, name="logout"),

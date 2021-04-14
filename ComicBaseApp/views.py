@@ -13,18 +13,18 @@ environ.Env.read_env()
 
 
 class AddCommentView(FormView):
-    def get(self, request):
+    def get(self, request, id):
         template_name = 'form.html'
         form = CommentForm()
         return render(request, template_name, {'form': form})
 
-    def post(self, request):
+    def post(self, request, id):
         form = CommentForm(request.POST)
         if form.is_valid():
-            post_user = ComicUser.objects.filter(
-                username=request.user.username).first()
+            post_user = ComicUser.objects.get(
+                username=request.user.username)
             # fix to be preselected on click
-            post_comic = ComicBook.objects.all().first()
+            post_comic = ComicBook.objects.get(id=id)
             data = form.cleaned_data
             new_comment = ComicComment.objects.create(
                 comment=data['comment'],
@@ -187,22 +187,25 @@ class ComicDetailView(View):
     def get(self, request, id):
         html = 'comic_detail.html'
         issue_results = self.api_call(id)
-        context = {'issue': issue_results}
-        return render(request, html, context)
-
-    def post(self, request, id):
-        html = 'comic_detail.html'
-        issue_results = self.api_call(id)
-
         if not ComicBook.objects.filter(name=issue_results["name"]).first():
             self.add_database(id)
-        fav_comic = ComicBook.objects.get(name=issue_results["name"])
-        cuser = ComicUser.objects.get(id=request.user.id)
-
-        # add comic to user's favorites
-        # Currently adding to all users favorites
-        cuser.favorites.add(fav_comic)
-        cuser.save()
-
-        context = {'issue': issue_results}
+        book = ComicBook.objects.get(name=issue_results["name"])
+        context = {'issue': issue_results, 'book': book}
         return render(request, html, context)
+
+    # def post(self, request, id):
+    #     html = 'comic_detail.html'
+    #     issue_results = self.api_call(id)
+
+    #     if not ComicBook.objects.filter(name=issue_results["name"]).first():
+    #         self.add_database(id)
+    #     fav_comic = ComicBook.objects.get(name=issue_results["name"])
+    #     cuser = ComicUser.objects.get(id=request.user.id)
+
+    #     # add comic to user's favorites
+    #     # Currently adding to all users favorites
+    #     cuser.favorites.add(fav_comic)
+    #     cuser.save()
+
+    #     context = {'issue': issue_results}
+    #     return render(request, html, context)
