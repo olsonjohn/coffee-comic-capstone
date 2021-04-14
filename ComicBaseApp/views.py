@@ -190,7 +190,8 @@ class ComicDetailView(View):
         if not ComicBook.objects.filter(name=issue_results["name"]).first():
             self.add_database(id)
         book = ComicBook.objects.get(name=issue_results["name"])
-        context = {'issue': issue_results, 'book': book}
+        comments = ComicComment.objects.filter(comic_book_title=book)        
+        context = {'issue': issue_results, 'book': book, 'comments': comments }
         return render(request, html, context)
 
     # def post(self, request, id):
