@@ -16,7 +16,7 @@ Function views
 from django.contrib import admin
 from django.urls import path
 
-from ComicBaseApp.views import index, AddCommentView, SignupView, LoginView, logout_view, ComicDetailView, profile_view, AddFavoriteView
+from ComicBaseApp.views import index, AddCommentView, SignupView, LoginView, logout_view, ComicDetailView, profile_view, AddFavoriteView, CheckoutView, HoldView
 
 urlpatterns = [
     path("", index, name="home"),
@@ -27,7 +27,9 @@ urlpatterns = [
     path("logout/", logout_view, name="logout"),
     path("comicinfo/<int:id>/", ComicDetailView.as_view(), name="comicinfo"),
     path("profile/<str:username>/", profile_view, name="profile_view"),
-    path("add_favorite/<int:id>/", AddFavoriteView.as_view(), name="favorite_view")
+    path("add_favorite/<int:id>/", AddFavoriteView.as_view(), name="favorite_view"),
+    path("checkout/<int:id>/", CheckoutView.as_view(), name="checkout_view"),
+    path("hold/<int:id>/", HoldView.as_view(), name="hold_view"),
 ]
 
 handler404 = 'ComicBaseApp.views.e404'
