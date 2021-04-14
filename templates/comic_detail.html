@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content%}
 <h1> {{book.name}} - Issue: {{book.issue_number}} </h2>
-        <img src="{{ issue.image.thumb_url }}" alt="">
+        <img src="{{ book.image }}" alt="">
 
 
   {% if book.description is not None %}
