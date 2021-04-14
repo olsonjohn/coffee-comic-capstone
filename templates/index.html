@@ -1,16 +1,15 @@
 {% extends "base.html" %}
 {% block content%}
 
-<ul>
+
     {% for issue in issue %}
     {% if issue.name is not None %}
-    <li>
+    <div>
         <a href="db_add/{{issue.id}}">
             <img src="{{ issue.image.thumb_url }}" alt="">
         </a>
-        {{issue.id}} | {{ issue.name }}
-    </li>
+        {{ issue.name }}
+    </div>
     {% endif %}
     {% endfor %}
-</ul>
 {% endblock %}
