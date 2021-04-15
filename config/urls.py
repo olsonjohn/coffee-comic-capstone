@@ -43,6 +43,7 @@ urlpatterns = [
     path("checkout/<int:id>/", CheckoutView.as_view(), name="checkout_view"),
     path("hold/<int:id>/", HoldView.as_view(), name="hold_view"),
     path("db_add/<int:id>/", AddToDB.as_view(), name="db_add"),
+    
 ]
 
 handler404 = "ComicBaseApp.views.e404"

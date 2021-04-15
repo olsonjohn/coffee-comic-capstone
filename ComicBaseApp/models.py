@@ -13,9 +13,9 @@ class ComicBook(models.Model):
     volume = models.CharField(max_length=150)
     issue = models.IntegerField()
     image = models.URLField(default="")
+    lg_image = models.URLField(default="")
     is_checked_out = models.BooleanField(default=False)
-
-
+    is_on_hold = models.BooleanField(default=False)
     def __str__(self):
         return f'{self.name} | {self.author} | Vol.: {self.volume} - No.: {self.issue}'
 
@@ -24,7 +24,7 @@ class ComicUser(AbstractUser):
     display_name = models.CharField(max_length=50, null=True, blank=True)
     bio = models.TextField()
     favorites = models.ManyToManyField('ComicBook', blank=True, related_name='favorites')
-    # favorites = models.ForeignKey('ComicBook', on_delete=models.CASCADE, null=True, blank=True, related_name='favorites')
+    holds = models.ManyToManyField('Hold', blank=True, related_name='holds')
     created_date = models.DateField(default=datetime.date.today)
     REQUIRED_FIELDS = ['display_name', 'bio','created_date']
 
@@ -40,3 +40,12 @@ class ComicComment(models.Model):
 
     def __str__(self):
         return self.comment
+
+
+class Hold(models.Model):
+    comicbook = models.ForeignKey(ComicBook, on_delete=models.CASCADE, related_name='comicbook')
+    user = models.ForeignKey(ComicUser, on_delete=models.CASCADE, related_name='comicuser')
+    hold_time = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f'{self.comicbook} | {self.user}' 
