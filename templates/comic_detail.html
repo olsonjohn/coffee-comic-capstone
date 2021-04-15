@@ -1,9 +1,15 @@
 {% extends "base.html" %}
 {% block content%}
-<h1> {{book.name}} - Issue: {{book.issue_number}} </h2>
-        <img src="{{ book.image }}" alt="">
+<div class='nes-container with-title comicdetailbox'>
+<div class="comic-box">
+<div class="comicheader">
+<img src="{{ book.image }}" alt="">
+</div>
+<div class='description'>
+<hr>
 
-
+<div class='nes-text' style="font-weight: bold"> {{book.name}} - Issue: {{book.issue}} </div>
+<hr>
   {% if book.description is not None %}
   {% autoescape off %}
 {{book.description}}
@@ -11,7 +17,9 @@
     {% else %}
     <p> No Description Available </p>
     {% endif %}
-
+</div>
+</div>
+</div>
     {% comment %}
     <a href = "{% url 'comicinfo' id=issue.id %}"> <button>add</button></a>
     <button type="submit">Add to my favorites</button>
@@ -20,16 +28,22 @@
     {% endcomment %}
 
       {% csrf_token %}
+      {% if request.user.is_authenticated%}
     <a href="{% url 'favorite_view' id=book.id %}">
       <button>Add to Favorites</button>
     </a>
     <hr>
-    <ul>
-      {% for comment in comments%}
-      <li>{{ comment.comment }} | {{ comment.user }} <br> {{ comment.created_at }}</li><hr>
+    <div class='nes-container with-title commentbox'>
+    <span class='title'>Comments</span>
+      {% for comment in comments %}
+      <div class='nes-container is-rounded commentcard'>
+      <div>{{comment.user.display_name}} | <a href='/profile/{{comment.user}}' >@{{ comment.user }}</a></div>
+      <div>{{ comment.comment }}</div>
+      <div>{{ comment.created_at }}</div>
+      </div>
       {% endfor %}
-    </ul>
-
+    </div>
+      {% if request.user.is_authenticated%}
     <a href="{% url 'add_comment' id=book.id %}">
       <button>Comment</button>
     </a>
@@ -44,7 +58,14 @@
         <button>Place on hold</button>
       </a>
       {% endif %}
-    
+
+    {% endif %}
+      
+      {% else %}
+        <div class='nes-container'>
+        <span class='nes-text'> Login / Signup to see if this comic is avaliable and to read / leave a comment</span>
+        </div>
+      {% endif %}
 
     
 

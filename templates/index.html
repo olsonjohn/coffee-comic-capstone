@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content%}
 
-
+    <div class='nes-container homebox'>
     {% for issue in issue %}
     {% if issue.name is not None %}
-    <div>
-        <a href="db_add/{{issue.id}}">
-            <img src="{{ issue.image.thumb_url }}" alt="">
-        </a>
-        {{ issue.name }}
-    </div>
+    <div onclick="location.href='db_add/{{issue.id}}'" class='comicdetails is-rounded nes-container'>
+       <img src="{{ issue.image.thumb_url }}" alt="">
+       <div class='comicinfo'>
+       <span class='nes-text'>{{issue.name}}</span>
+       </div>
+       </div>
     {% endif %}
     {% endfor %}
 {% endblock %}
