@@ -89,6 +89,20 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "gunicorn"
+version = "20.1.0"
+description = "WSGI HTTP Server for UNIX"
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[package.extras]
+eventlet = ["eventlet (>=0.24.1)"]
+gevent = ["gevent (>=1.4.0)"]
+setproctitle = ["setproctitle"]
+tornado = ["tornado (>=0.2)"]
+
+[[package]]
 name = "idna"
 version = "2.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -194,7 +208,7 @@ brotli = ["brotlipy (>=0.6.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "06c3f66f4b741075c455c1e90e778a054e2f1de48a7596025f8a6b59b80f2df2"
+content-hash = "bd4d47d1ef6745d78ffc6e93996f746a893031334599ccedf14d1f60d29a5d3e"
 
 [metadata.files]
 appdirs = [
@@ -227,6 +241,9 @@ django = [
 django-environ = [
     {file = "django-environ-0.4.5.tar.gz", hash = "sha256:6c9d87660142608f63ec7d5ce5564c49b603ea8ff25da595fd6098f6dc82afde"},
     {file = "django_environ-0.4.5-py2.py3-none-any.whl", hash = "sha256:c57b3c11ec1f319d9474e3e5a79134f40174b17c7cc024bbb2fad84646b120c4"},
+]
+gunicorn = [
+    {file = "gunicorn-20.1.0.tar.gz", hash = "sha256:e0a968b5ba15f8a328fdfd7ab1fcb5af4470c28aaf7e55df02a99bc13138e6e8"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
