@@ -24,21 +24,19 @@
       {% endfor %}
       </div>
               </div>
-              {% comment %} 
               <div class="nes-container with-title">
     <span class="title">{{user.display_name}}'s Hold List</span>
     <div class="favcom">
-      {% for favorite in user.favorites.values %}
-      <div class="nes-container comicdetails">
-        <img src="{{favorite.image}}" alt="comic image" />
+      {% for hold in holds %}
+        <div class="nes-container comicdetails">
+        <img src="{{hold.image}}"/>
         <div class="comicinfo">
-          <a href="/comicinfo/{{favorite.id}}/"> {{favorite.name}} </a>
-          <p>Author: {{favorite.author}}</p>
+        <a href="/comicinfo/{{hold.id}}/"> {{hold.name}} </a>
+        {% comment %} <p>Author: {{hold.author}}</p> {% endcomment %}
         </div>
       </div>
       {% endfor %}
       </div>
               </div>
-               {% endcomment %}
           </div>
                 {% endblock %}

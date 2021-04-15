@@ -3,7 +3,7 @@
 <div class='nes-container with-title comicdetailbox'>
 <div class="comic-box">
 <div class="comicheader">
-<img src="{{ book.image }}" alt="">
+<img src="{{ book.lg_image }}" alt="">
 </div>
 <div class='description'>
 <hr>
@@ -63,8 +63,18 @@
       
       {% else %}
         <div class='nes-container'>
-        <span class='nes-text'> Login / Signup to see if this comic is avaliable and to read / leave a comment</span>
+        <span class='nes-text'> Login / Signup to see if this comic is avaliable and to leave a comment</span>
         </div>
+      <div class='nes-container with-title commentbox'>
+    <span class='title'>Comments</span>
+      {% for comment in comments %}
+      <div class='nes-container is-rounded commentcard'>
+      <div>{{comment.user.display_name}} | <a href='/profile/{{comment.user}}' >@{{ comment.user }}</a></div>
+      <div>{{ comment.comment }}</div>
+      <div>{{ comment.created_at }}</div>
+      </div>
+      {% endfor %}
+    </div>
       {% endif %}
 
     
