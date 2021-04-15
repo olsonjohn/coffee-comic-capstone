@@ -1,27 +1,44 @@
-{% extends "base.html" %}
-{% block content %}
-<div>
- Welcome {{user.display_name}}
- </div>
-<div>
-Date Joined: {{user.created_date}}
-<div>Bio: {{user.bio}} </div>
+{% extends "base.html" %} {% block content %}
+<div></div>
+<div class="nes-container with-title">
+  <span class="title">Profile Info</span>
+  Username: {{user.username}} <br />
+  Display Name: {{user.display_name}}<br />
+  Date Joined: {{user.created_date}}<br />
+
+  <div>Bio: {{user.bio}}</div>
 </div>
-<div>
-<h2> Your Favorites </h2>
-    {% for favorite in user.favorites.values %}
-   <div>
-   <img src='{{favorite.image}}' alt='comic image'/>
-        <a href="/comicinfo/{{favorite.id}}/">
-            {{favorite.name}}
-        </a>
-        <p>Author: {{favorite.author}}
-        <div><h6>Description</h6>
-         {% autoescape off %}
-        <p>{{favorite.description}}</p>
-        {% endautoescape %}
+
+<div class="nes-container profilebox">
+  <div class="nes-container with-title">
+    <span class="title">{{user.display_name}}'s Favorite Comics</span>
+    <div class="favcom">
+      {% for favorite in user.favorites.values %}
+      <div onclick="location.href='/comicinfo/{{favorite.id}}/'" class="nes-container comicdetails is-rounded">
+        <img src="{{favorite.image}}" alt="comic image" />
+        <div class="comicinfo">
+          <span class='nes-text is-primary'> {{favorite.name}}</span>
+          <span class="nes-text"> Author: {{favorite.author}}</span>
         </div>
-    </div>
-    {% endfor %}
-<div>
-{% endblock %}
+      </div>
+      {% endfor %}
+      </div>
+              </div>
+              {% comment %} 
+              <div class="nes-container with-title">
+    <span class="title">{{user.display_name}}'s Hold List</span>
+    <div class="favcom">
+      {% for favorite in user.favorites.values %}
+      <div class="nes-container comicdetails">
+        <img src="{{favorite.image}}" alt="comic image" />
+        <div class="comicinfo">
+          <a href="/comicinfo/{{favorite.id}}/"> {{favorite.name}} </a>
+          <p>Author: {{favorite.author}}</p>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+              </div>
+               {% endcomment %}
+          </div>
+                {% endblock %}
