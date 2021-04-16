@@ -4,8 +4,8 @@
     <div class='nes-container homebox'>
     {% for issue in issue %}
     {% if issue.name is not None %}
-    <div onclick="location.href='db_add/{{issue.id}}'" class='comicdetails is-rounded nes-container'>
-       <img src="{{ issue.image.thumb_url }}" alt="">
+    <div onclick="location.href='comicinfo/{{issue.id}}'" class='comicdetails is-rounded nes-container'>
+       <img src="{{ issue.image }}" alt="">
        <div class='comicinfo'>
        <span class='nes-text'>{{issue.name}}</span>
        </div>
