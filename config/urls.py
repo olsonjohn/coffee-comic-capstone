@@ -28,6 +28,7 @@ from ComicBaseApp.views import (
     CheckoutView,
     HoldView,
     AddToDB,
+    SearchResultsView
 )
 
 urlpatterns = [
@@ -43,6 +44,7 @@ urlpatterns = [
     path("checkout/<int:id>/", CheckoutView.as_view(), name="checkout_view"),
     path("hold/<int:id>/", HoldView.as_view(), name="hold_view"),
     path("db_add/<int:id>/", AddToDB.as_view(), name="db_add"),
+    path("search/", SearchResultsView.as_view(), name="search_results")
     
 ]
 
