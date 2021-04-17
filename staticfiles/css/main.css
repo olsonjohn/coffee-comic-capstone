@@ -80,6 +80,7 @@ nav, .nes-container {
 
 .commentcard {
     margin-bottom: 25px !important;
+    margin-left: 10px !important;
 }
 
 .comicdetailbox {
@@ -103,4 +104,12 @@ nav, .nes-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+footer {
+    max-height: 150px;
+}
+#cvinelogo {
+    height: 25px;
+    width: 75px;
 }
