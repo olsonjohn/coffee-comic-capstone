@@ -1,11 +1,10 @@
 # coffee-comic-capstone
 
 
-Team Coffee
-Britt
-Lee
-Akil
-John
+##Team Coffee
+* Britt
+* Lee
+* Akil
+* John
 
-
-ComicVine API
+[ComicVine API](https://comicvine.gamespot.com/api/)
