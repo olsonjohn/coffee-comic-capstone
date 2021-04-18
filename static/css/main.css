@@ -1,3 +1,4 @@
+
 @font-face {
     font-family: SuperLegendBoy;
     src: url(../fonts/SuperLegendBoy.ttf);
@@ -37,12 +38,10 @@ nav, .nes-container {
     padding: 0.5rem 2rem;
 }
 
-#info_img {
-    max-height: 100% !important;
-    min-height: 350px !important;
-    width: 100% !important;
-
-}
+/* img {
+    height: 160px;
+    width: 108px;
+} */
 .profilebox {
     display: flex;
     flex-direction: row;
@@ -81,6 +80,7 @@ nav, .nes-container {
 
 .commentcard {
     margin-bottom: 25px !important;
+    margin-left: 10px !important;
 }
 
 .comicdetailbox {
@@ -104,9 +104,12 @@ nav, .nes-container {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-size: cover;
-    border: 1px solid black;
-    width: 50%;
-    
+}
 
+footer {
+    max-height: 150px;
+}
+#cvinelogo {
+    height: 25px;
+    width: 75px;
 }
