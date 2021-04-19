@@ -1,14 +1,36 @@
 {% extends "base.html" %} {% block content %}
-<div></div>
+<div class='profileinfopage'>
 <div class="nes-container with-title">
   <span class="title">Profile Info</span>
   Username: {{user.username}} <br />
+  Email: {{user.email}} <br />
   Display Name: {{user.display_name}}<br />
   Date Joined: {{user.created_date}}<br />
-
   <div>Bio: {{user.bio}}</div>
 </div>
-
+{% if checked_comic %}
+<div class="nes-container with-title">
+<span class="title">Currently Checked Out</span>
+  <div onclick="location.href='/comicinfo/{{checked_comic.id}}/'" class="nes-container comicdetails is-rounded">
+        <img src="{{checked_comic.image}}" alt="comic image" />
+        <div class="comicinfo">
+          <span class='nes-text is-primary'> {{checked_comic.name}}</span>
+          <span class="nes-text"> Author: {{checked_comic.author}}</span>
+        </div>
+</div>
+<a href="{% url 'add_comment' id=checked_comic.id %}">
+ <button class='nes-btn' type='submit'>Comment on Comic</button></a>
+<a href="{% url 'return_view' id=checked_comic.id %}">
+ <button class='nes-btn' type='submit'>Return Comic</button>
+</div>
+{% else %}
+<div class="nes-container with-title">
+<span class="title">Currently Checked Out</span>
+      <p class='nes-text'>You currently have no comics checked out.</p>
+        </div>
+{% endif %}
+</div>
+</div>
 <div class="nes-container profilebox">
   <div class="nes-container with-title">
     <span class="title">{{user.display_name}}'s Favorite Comics</span>

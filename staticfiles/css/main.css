@@ -29,6 +29,10 @@ nav {
     padding: 0;
     margin: 1px;
     margin-bottom: 25px !important;
+    position: sticky !important;
+    top: 0px !important;
+    z-index: 1 !important;
+
 }
 
 .nes-container {
@@ -108,8 +112,24 @@ nav, .nes-container {
 
 footer {
     max-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+footer h2 {
+    
+    font-size: 12px !important;
 }
 #cvinelogo {
-    height: 25px;
-    width: 75px;
+    height: 40px;
+}
+#info_img {
+    max-width: 350px;
+
+}
+
+.profileinfopage {
+    display: flex;
+    justify-content: space-evenly;
 }

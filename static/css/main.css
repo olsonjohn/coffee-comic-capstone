@@ -110,8 +110,10 @@ footer {
     max-height: 150px;
 }
 #cvinelogo {
-    height: 50px;
-    width: 75px;
+    height: 40px;
 }
 
-/* testing static dir */
+#info_img {
+    width: 350px;
+
+}

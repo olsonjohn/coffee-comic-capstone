@@ -1,3 +1,4 @@
+from django.db.models.query_utils import check_rel_lookup_compatibility
 from django.shortcuts import HttpResponseRedirect, reverse, render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.views.generic import View, FormView, ListView
@@ -96,12 +97,18 @@ def index(request):
 
 
 def profile_view(request, username):
+    
+
     user = ComicUser.objects.get(username=username)
+    if user.checkedout_comic:
+        checked_comic = ComicBook.objects.get(id=user.checkedout_comic.id)
+    else:
+        checked_comic = False
     hold_books = []
     for hold in user.holds.values():
         hold_books.append(ComicBook.objects.get(id=hold['comicbook_id']))
         
-    return render(request, "profile.html", {"user": user, "holds": hold_books})
+    return render(request, "profile.html", {"user": user, "holds": hold_books, "checked_comic": checked_comic})
 
 
 def e404(request, exception):
@@ -146,10 +153,21 @@ class CheckoutView(View):
         checked_out_comic = ComicBook.objects.get(id=id)
         cuser = ComicUser.objects.get(id=request.user.id)
         checked_out_comic.is_checked_out = True
-        # checkouted_by = cuser
+        cuser.checkedout_comic = checked_out_comic
+        cuser.save()
         checked_out_comic.save()
         return redirect("comicinfo", id=id)
 
+
+class ReturnView(View):
+    def get(self, request, id):
+        checked_out_comic = ComicBook.objects.get(id=id)
+        cuser = ComicUser.objects.get(id=request.user.id)
+        checked_out_comic.is_checked_out = False
+        cuser.checkedout_comic = None
+        cuser.save()
+        checked_out_comic.save()
+        return redirect("profile_view", username=cuser.username)
 
 class HoldView(View):
     def get(self, request, id):
