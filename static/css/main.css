@@ -1,0 +1,117 @@
+
+@font-face {
+    font-family: SuperLegendBoy;
+    src: url(../fonts/SuperLegendBoy.ttf);
+}
+
+@font-face {
+    font-family: WayfarersToyBoxRegular;
+    src: url(../fonts/WayfarersToyBoxRegular.ttf);
+}
+
+
+:root {
+    box-sizing: border-box;
+    font-family: SuperLegendBoy;
+}
+body {
+    background: #d5d4d8;
+}
+
+.heading{
+    font-family: WayfarersToyBoxRegular;
+}
+
+ 
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    margin: 1px;
+    margin-bottom: 25px !important;
+}
+
+.nes-container {
+    margin: 10px;
+}
+nav, .nes-container {
+    padding: 0.5rem 2rem;
+}
+
+/* img {
+    height: 160px;
+    width: 108px;
+} */
+.profilebox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.homebox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+.favcom {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+}
+.comicdetails{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px !important;
+    max-width: 550px;
+}
+
+.comicdetails:hover {
+    box-shadow: 7px 7px gold;
+}
+.comicinfo {
+    display: flex;
+    flex-direction: column;
+    margin: 1em;
+
+}
+
+.commentcard {
+    margin-bottom: 25px !important;
+    margin-left: 10px !important;
+}
+
+.comicdetailbox {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.comic-box {
+    display: flex;
+    justify-content: space-evenly;
+    flex-grow: 1;
+    padding-top: 15px;
+    /* flex-wrap: wrap;
+    flex-shrink: shrink;
+    flex-direction: row; */
+}
+.description {
+    max-width: 450px;
+}
+.comicheader {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+footer {
+    max-height: 150px;
+}
+#cvinelogo {
+    height: 50px;
+    width: 75px;
+}
+
+/* testing static dir */
