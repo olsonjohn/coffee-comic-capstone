@@ -24,7 +24,7 @@ class ComicBook(models.Model):
 class ComicUser(AbstractUser):
     display_name = models.CharField(max_length=50, null=True, blank=True)
     bio = models.TextField()
-    email = models.EmailField(max_length=100)
+    email = models.EmailField(max_length=100, null=True, blank=True)
     favorites = models.ManyToManyField('ComicBook', blank=True, related_name='favorites')
     holds = models.ManyToManyField('Hold', blank=True, related_name='holds')
     checkedout_comic = models.ForeignKey("ComicBook", null=True, blank=True, related_name="checkedout_comic", on_delete=models.CASCADE)
