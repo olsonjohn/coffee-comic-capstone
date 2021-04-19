@@ -20,7 +20,8 @@
 </div>
 <a href="{% url 'add_comment' id=checked_comic.id %}">
  <button class='nes-btn' type='submit'>Comment on Comic</button></a>
-  <button class='nes-btn disabled' type='submit'>Return Comic</button>
+<a href="{% url 'return_view' id=checked_comic.id %}">
+ <button class='nes-btn' type='submit'>Return Comic</button>
 </div>
 {% else %}
 <div class="nes-container with-title">

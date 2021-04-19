@@ -153,11 +153,21 @@ class CheckoutView(View):
         checked_out_comic = ComicBook.objects.get(id=id)
         cuser = ComicUser.objects.get(id=request.user.id)
         checked_out_comic.is_checked_out = True
-        cuser.checkedout_comic = checked_out_comic['id']
+        cuser.checkedout_comic = checked_out_comic
         cuser.save()
         checked_out_comic.save()
         return redirect("comicinfo", id=id)
 
+
+class ReturnView(View):
+    def get(self, request, id):
+        checked_out_comic = ComicBook.objects.get(id=id)
+        cuser = ComicUser.objects.get(id=request.user.id)
+        checked_out_comic.is_checked_out = False
+        cuser.checkedout_comic = None
+        cuser.save()
+        checked_out_comic.save()
+        return redirect("profile_view", username=cuser.username)
 
 class HoldView(View):
     def get(self, request, id):

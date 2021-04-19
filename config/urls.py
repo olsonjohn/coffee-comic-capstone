@@ -28,7 +28,8 @@ from ComicBaseApp.views import (
     CheckoutView,
     HoldView,
     AddToDB,
-    SearchResultsView
+    SearchResultsView,
+    ReturnView
 )
 
 urlpatterns = [
@@ -42,6 +43,7 @@ urlpatterns = [
     path("profile/<str:username>/", profile_view, name="profile_view"),
     path("add_favorite/<int:id>/", AddFavoriteView.as_view(), name="favorite_view"),
     path("checkout/<int:id>/", CheckoutView.as_view(), name="checkout_view"),
+    path("return/<int:id>", ReturnView.as_view(), name='return_view'),
     path("hold/<int:id>/", HoldView.as_view(), name="hold_view"),
     path("db_add/<int:id>/", AddToDB.as_view(), name="db_add"),
     path("search/", SearchResultsView.as_view(), name="search_results")
