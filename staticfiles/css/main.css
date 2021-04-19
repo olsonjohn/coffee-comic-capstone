@@ -1,19 +1,14 @@
 
 @font-face {
-    font-family: SuperLegendBoy;
-    src: url(../fonts/SuperLegendBoy.ttf);
-}
-
-@font-face {
     font-family: WayfarersToyBoxRegular;
     src: url(../fonts/WayfarersToyBoxRegular.ttf);
 }
-
 
 :root {
     box-sizing: border-box;
     font-family: SuperLegendBoy;
 }
+
 body {
     background: #d5d4d8;
 }
@@ -22,7 +17,6 @@ body {
     font-family: WayfarersToyBoxRegular;
 }
 
- 
 nav {
     display: flex;
     justify-content: space-between;
@@ -32,6 +26,7 @@ nav {
     position: sticky !important;
     top: 0px !important;
     z-index: 1 !important;
+    align-items: center;
 
 }
 
@@ -42,14 +37,10 @@ nav, .nes-container {
     padding: 0.5rem 2rem;
 }
 
-/* img {
-    height: 160px;
-    width: 108px;
-} */
 .profilebox {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
 
 }
 
