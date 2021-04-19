@@ -50,10 +50,11 @@
     <span class="title">{{user.display_name}}'s Hold List</span>
     <div class="favcom">
       {% for hold in holds %}
-        <div class="nes-container comicdetails">
+        <div onclick="location.href='/comicinfo/{{hold.id}}/'" class="nes-container comicdetails is-rounded">
         <img src="{{hold.image}}"/>
         <div class="comicinfo">
-        <a href="/comicinfo/{{hold.id}}/"> {{hold.name}} </a>
+        <span class='nes-text is-primary'> {{hold.name}}</span>
+        <span class="nes-text"> Author: {{hold.author}}</span>
         {% comment %} <p>Author: {{hold.author}}</p> {% endcomment %}
         </div>
       </div>
