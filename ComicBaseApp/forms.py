@@ -13,6 +13,8 @@ class SignUpForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
     display_name = forms.CharField(max_length=50)
+    bio = forms.CharField(max_length=250)
+    email = forms.EmailField(max_length=100)
 
 
 class CommentForm(forms.ModelForm):
