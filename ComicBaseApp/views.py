@@ -46,6 +46,8 @@ class SignupView(View):
                 username=data["username"],
                 password=data["password"],
                 display_name=data["display_name"],
+                bio=data["bio"],
+                email=data["email"]
             )
             login(request, new_user)
             return HttpResponseRedirect(reverse("home"))
