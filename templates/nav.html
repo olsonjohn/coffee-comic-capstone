@@ -1,6 +1,7 @@
+{% load static %}
 <nav class="nes-container is-dark">
     <div onclick="location.href='/'">
-    <h1 class='heading nes-text is-primary'>Hyper Comics</h1>
+    <img id='logo' src="{% static 'img/logo.png' %}" alt='hypercomics logo'>
     </div>
     <form action="{% url 'search_results' %}" method="GET">
     <div class="nes-field is-inline">
